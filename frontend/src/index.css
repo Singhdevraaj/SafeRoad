@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+body {
+  margin: 0;
+  display: block;
+  min-width: 320px;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+@theme {
+  --color-green-zone: #4ade80;
+  --color-orange-zone: #fb923c;
+  --color-red-zone: #f87171;
+}
+
+.leaflet-container.picking { cursor: crosshair !important; }
+.leaflet-popup-content { margin: 10px 12px; }
