@@ -97,6 +97,7 @@ const roadSegmentSchema = new Schema({
   aliases: { type: [String], default: [] },
   osm: { ref: String, name: String },
   bbox: { type: [Number], default: undefined },
+  waypoints: { type: [[Number]], default: undefined },
   paths: { type: [[[Number]]], default: [] },
   geometrySource: { type: String, enum: ['fallback', 'osm'], default: 'fallback' },
   geometryFetchedAt: Date,
