@@ -42,7 +42,12 @@ const zoneHistorySchema = new Schema({
   recordedAt: { type: Date, default: Date.now },
 });
 
-export const REPORT_CATEGORIES = ['road_hazard', 'accident', 'dangerous_driving', 'traffic_disruption', 'weather_hazard', 'harassment', 'poor_lighting', 'suspicious_activity', 'unsafe_area', 'other'];
+export const REPORT_CATEGORIES = [
+  'road_hazard', 'accident', 'dangerous_driving', 'traffic_disruption', 'weather_hazard',
+  'harassment', 'poor_lighting', 'suspicious_activity', 'unsafe_area', 'other',
+  // Legacy / cross-compatible categories
+  'women_safe', 'police', 'hospital', 'pharmacy', 'transport', 'rest_stop', 'public_place', 'shelter',
+];
 export const PLACE_CATEGORIES = ['women_safe', 'police', 'hospital', 'pharmacy', 'transport', 'rest_stop', 'public_place', 'shelter'];
 
 const communityReportSchema = new Schema({
@@ -53,7 +58,7 @@ const communityReportSchema = new Schema({
   lat: { type: Number, required: true, min: -90, max: 90 },
   lng: { type: Number, required: true, min: -180, max: 180 },
   status: { type: String, enum: ['UNVERIFIED', 'VERIFIED', 'REJECTED'], default: 'UNVERIFIED' },
-  source: { type: String, enum: ['community', 'demo-seed'], default: 'community' },
+  source: { type: String, enum: ['community', 'demo-seed', 'admin'], default: 'community' },
   confirms: { type: [String], default: [] },
   disputes: { type: [String], default: [] },
   reviewedByAdmin: { type: Boolean, default: false },

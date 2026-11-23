@@ -23,7 +23,17 @@ export const REPORT_GROUPS = [
   ['Personal safety', [['harassment', 'Harassment / eve-teasing'], ['poor_lighting', 'Poor street lighting'], ['suspicious_activity', 'Suspicious activity'], ['unsafe_area', 'Area feels unsafe']]],
   ['Other', [['other', 'Other safety issue']]],
 ];
-export const REPORT_LABELS = Object.fromEntries(REPORT_GROUPS.flatMap(([, items]) => items));
+export const REPORT_LABELS = {
+  ...Object.fromEntries(REPORT_GROUPS.flatMap(([, items]) => items)),
+  women_safe: "Women's safe space",
+  police: 'Police station',
+  hospital: 'Hospital / Clinic',
+  pharmacy: '24×7 pharmacy',
+  transport: 'Transit hub',
+  rest_stop: 'Rest stop',
+  public_place: 'Public place',
+  shelter: 'Safe shelter',
+};
 export const WOMEN_REPORTS = ['harassment', 'poor_lighting', 'suspicious_activity', 'unsafe_area'];
 
 export const INCIDENT_LABELS = { accident: 'Road accident', road_hazard: 'Road hazard', traffic_disruption: 'Traffic disruption', vehicle_fire: 'Vehicle fire', harassment: 'Harassment', crime: 'Crime', other: 'Incident' };

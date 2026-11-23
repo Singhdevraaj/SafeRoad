@@ -146,7 +146,7 @@ app.post('/api/reports/:id/vote', optionalAuth, voteLimiter, async (req, res, ne
     report.confirms = votes.confirms;
     report.disputes = votes.disputes;
     report.status = nextStatus({ confirms: votes.confirms.length, disputes: votes.disputes.length, current: report.status, pending: 'UNVERIFIED', locked: report.reviewedByAdmin });
-    await report.save();
+    await report.save({ validateModifiedOnly: true });
     res.json({ report: publicReport(report) });
   } catch (error) { next(error); }
 });
@@ -211,7 +211,7 @@ app.post('/api/places/:id/vote', optionalAuth, voteLimiter, async (req, res, nex
     place.confirms = votes.confirms;
     place.disputes = votes.disputes;
     place.status = nextStatus({ confirms: votes.confirms.length, disputes: votes.disputes.length, current: place.status, pending: 'PENDING', locked: place.reviewedByAdmin });
-    await place.save();
+    await place.save({ validateModifiedOnly: true });
     res.json({ place: publicPlace(place) });
   } catch (error) { next(error); }
 });
@@ -348,7 +348,10 @@ app.use((req, res) => {
 
 app.use((error, _req, res, _next) => {
   if (error.code === 11000) return res.status(409).json({ message: 'That email is already registered.' });
-  if (error.name === 'ValidationError') return res.status(400).json({ message: 'Some fields are invalid. Please check the form and try again.' });
+  if (error.name === 'ValidationError') {
+    const details = Object.values(error.errors || {}).map((e) => e.message).join(', ');
+    return res.status(400).json({ message: details || 'Some fields are invalid. Please check the form and try again.' });
+  }
   if (!error.status || error.status >= 500) console.error(error);
   res.status(error.status || 500).json({ message: error.status ? error.message : 'An unexpected server error occurred.' });
 });
